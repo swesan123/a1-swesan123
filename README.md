@@ -23,7 +23,12 @@ Remark: **We are assuming here you are using a _real_ shell (e.g., anything but 
  * Status: 
    * Pending (P), Started (S), Blocked (B), Done (D)
  * Definition of Done (DoD):
-   * < Your DoD goes here >
+   * The	score is	computed	by	counting	the	numbers	of	gold	coins	and	diamonds	and	multiplying	
+     it	by	100.
+   * We	only	have	two players,	both	playing	using	the	same	strategy.
+   * We	have	a	single	strategy	 for	a	player,	which	is	choosing	randomly	 the	dices the	player	is	    keeping,	and	re-rolling	until	obtaining	three	skulls	to	end	the	turn.	
+   * We	always	play	42	games during	a	simulation.
+   * At	the	end	of	the	simulation,	we	print	on	stdout the	percentage	of	wins	for	each	player
 
 ### Backlog 
 
