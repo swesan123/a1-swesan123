@@ -23,7 +23,9 @@ Remark: **We are assuming here you are using a _real_ shell (e.g., anything but 
  * Status: 
    * Pending (P), Started (S), Blocked (B), Done (D)
  * Definition of Done (DoD):
-   * The game is able to function with two players in a 42 game simulation. 
+   * The game is able to function with two players in a 42 game simulation where we print out win % of each player after. 
+   * Score can be calculated by multiplying the number of gold coins and diamonds by 100
+   * The choice of dice by the player is at random and their turn ends once they obtain 3 skulls,
 
 ### Backlog 
 
