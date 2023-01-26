@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 public class PiratenKarpen {
 
+
     public static void main(String[] args) {
         System.out.println("Welcome to Piraten Karpen Simulator!");
         System.out.println("I'm rolling a dice");
@@ -17,6 +18,7 @@ public class PiratenKarpen {
         System.out.println("  (DEBUG) " + Arrays.toString(Faces.values()));
         System.out.println(myDice.rollEight());
         System.out.println("That's all folks!");
+        System.out.println("test");
     }
     
 }
