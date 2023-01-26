@@ -19,6 +19,8 @@ public class PiratenKarpen {
         System.out.println(myDice.rollEight());
         System.out.println("That's all folks!");
         System.out.println("test");
+        System.out.println("test");
+
     }
     
 }
