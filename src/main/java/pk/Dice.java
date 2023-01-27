@@ -6,6 +6,7 @@ public class Dice {
 
     ArrayList<Faces> die = new ArrayList<Faces>();
     ArrayList<Faces> dieStorage = new ArrayList<Faces>();
+    public int score = 0;
 //    ArrayList<Faces> dieHistory = new ArrayList<Faces>();
     public int numDie = 8;
     public final int NUM_FACES = Faces.values().length;
@@ -27,7 +28,7 @@ public class Dice {
     }
     public void KeepDice() {
         
-        if (this.numDie > 1) {
+        if (this.numDie > 2) {
             Random randDie = new Random();
             ArrayList<Faces> tempDie = this.die;
             int randAmount = randDie.nextInt(this.numDie);
@@ -41,12 +42,37 @@ public class Dice {
 
     }
     public ArrayList<Faces> rollEight() {
-        die.clear();
+        this.die.clear();
         for (int i = this.numDie; i > 0; i--)
-            die.add(roll());
+            this.die.add(roll());
 //        dieHistory.addAll(die);
-        return die;
+        return this.die;
 
+    }
+
+    public int getScore() {
+
+        int numSaber = 0;
+        int numMonkey = 0;
+        int numParrot = 0;
+
+        for (Faces face: this.die) {
+            switch(face) {
+                case GOLD, DIAMOND -> this.score += 100;
+                case SABER -> numSaber++;
+                case MONKEY -> numMonkey++;
+                case PARROT -> numParrot++;
+            }
+
+        }
+        if (numSaber == 3)
+            this.score += 100;
+        else if (numMonkey == 3)
+            this.score += 100;
+        else if (numParrot == 3)
+            this.score += 100;
+
+        return this.score;
     }
 
 
