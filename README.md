@@ -1,7 +1,7 @@
 # A1 - Piraten Karpen
 
-  * Author: < You name here >
-  * Email: < Your email here >
+  * Author: < Swesan Pathmanathan >
+  * Email: < 201360on50@gmail.com >
 
 ## Build and Execution
 
