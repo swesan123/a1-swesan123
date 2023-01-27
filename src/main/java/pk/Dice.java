@@ -26,24 +26,24 @@ public class Dice {
         return Faces.values()[rand];
     }
     public void KeepDice() {
-
-        Random randDie = new Random();
-        int randAmount = randDie.nextInt(this.numDie);
-        for (int i = randAmount; i > 0; i--) {
-            int randIndex = randDie.nextInt(this.numDie);
-            dieStorage.add(die.get(randIndex));
-            this.numDie--;
+        
+        if (this.numDie > 1) {
+            Random randDie = new Random();
+            ArrayList<Faces> tempDie = this.die;
+            int randAmount = randDie.nextInt(this.numDie);
+            for (int i = randAmount; i > 0; i--) {
+                int randIndex = randDie.nextInt(this.numDie);
+                dieStorage.add(tempDie.get(randIndex));
+                tempDie.remove(randIndex);
+                this.numDie--;
+            }
         }
-
-
-
 
     }
     public ArrayList<Faces> rollEight() {
         die.clear();
         for (int i = this.numDie; i > 0; i--)
             die.add(roll());
-        this.KeepDice();
 //        dieHistory.addAll(die);
         return die;
 
