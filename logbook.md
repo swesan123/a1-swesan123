@@ -7,6 +7,7 @@
 | 01/14/2023 | Implemented F03 to select # of games through command-arg.                |
 | 01/14/2023 | Implemented F04 end of game feature that ends the game with three skulls |
 | 01/15/2023 | Implemented F05 Storing random dice feature.                             |
+| 01/15/2023 | Implemented F06 Scoring points with three of a kind.                     |
 |            |                                                                          |
 |            |                                                                          |
 |            |                                                                          |
