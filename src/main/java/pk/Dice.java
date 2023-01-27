@@ -59,9 +59,9 @@ public class Dice {
         for (Faces face: this.die) {
             switch(face) {
                 case GOLD, DIAMOND -> this.score += 100;
-                case SABER -> numSaber++;
-                case MONKEY -> numMonkey++;
-                case PARROT -> numParrot++;
+                case SABER -> ++numSaber;
+                case MONKEY -> ++numMonkey;
+                case PARROT -> ++numParrot;
             }
 
         }
