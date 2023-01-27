@@ -18,8 +18,7 @@ public class Dice {
 
         Random bag = new Random();
         int rand = bag.nextInt(NUMBER_FACES);
-        Faces rolledFace = Faces.values()[rand];
-        return rolledFace;
+        return Faces.values()[rand];
     }
 
     public ArrayList<Faces> rollEight() {
