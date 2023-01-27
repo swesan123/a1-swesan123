@@ -11,32 +11,49 @@ public class PiratenKarpen {
 
         System.out.println("Welcome to Piraten Karpen Simulator!");
         int numGames = Integer.parseInt(args[0]);
-        System.out.println(numGames);
+        System.out.println("Number of games: " + numGames);
         int numDice = 8;
 
         Dice myDice1 = new Dice(numDice-1);
         Dice myDice2 = new Dice(numDice-1);
-        ArrayList<Faces> player1;
-        ArrayList<Faces> player2;
+        ArrayList<Faces> player1,player2;
+
+
+        int skullCounter1 = 0,skullCounter2 = 0;
 
         while (numGames > 0) {
 
+            System.out.println("Player 1 Turn: ");
             player1 = myDice1.rollEight();
+            System.out.println("die roll: " + player1.toString());
+            System.out.println("Player 1's dice: " + myDice1.getDieStorage());
+
+            System.out.println("Player 2 Turn: ");
             player2 = myDice2.rollEight();
-            System.out.println(player1);
-            System.out.println(player2);
-            int craneCounter1 = 0;
-            int craneCounter2 = 0;
+            System.out.println("die roll: " + player2.toString());
+            System.out.println("Player 2's dice: " + myDice2.getDieStorage());
+
+
             for (Faces face: player1) {
                 if (face == Faces.SKULL)
-                    craneCounter1++;
+                    skullCounter1++;
             }
+            System.out.println("skull counter player 1: " + skullCounter1);
+
             for (Faces face: player2) {
                 if (face == Faces.SKULL)
-                    craneCounter2++;
+                    skullCounter2++;
             }
 
-            if (craneCounter1 == 3 || craneCounter2 == 3)
+            System.out.println("skull counter player 2: " + skullCounter2);
+
+
+
+
+            System.out.println("num die P1: " + myDice1.numDie);
+            System.out.println("num die P2: " + myDice2.numDie);
+
+            if (skullCounter1 == 3 || skullCounter2 == 3)
                 break;
 
             numGames--;
