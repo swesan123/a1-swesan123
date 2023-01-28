@@ -3,11 +3,8 @@ import pk.Faces;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.core.config.Configurator;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 
 public class PiratenKarpen {
@@ -70,7 +67,7 @@ public class PiratenKarpen {
                 System.out.println("die roll: " + player1.toString());
                 System.out.println("Score P1: " + myDice1.getScore());
                 System.out.println();
-                myDice1.KeepDice();
+                myDice1.keepDice();
                 System.out.println("Player 1's dice: " + myDice1.getDieStorage());
                 System.out.println();
                 System.out.println("Player 2 Turn: ");
@@ -82,7 +79,7 @@ public class PiratenKarpen {
 
 
                 System.out.println();
-                myDice2.KeepDice();
+                myDice2.keepDice();
                 System.out.println("Player 2's dice: " + myDice2.getDieStorage());
 
                 System.out.println();

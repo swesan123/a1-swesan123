@@ -4,34 +4,23 @@ import java.util.Random;
 
 public class Dice {
 
-    ArrayList<Faces> dieRolls = new ArrayList<>();
-    ArrayList<Faces> dieStorage = new ArrayList<>();
-    public int score = 0;
-//    ArrayList<Faces> dieHistory = new ArrayList<Faces>();
-    private int getNumDie = 8;
-    private int skullCounter = 0;
+
+    private ArrayList<Faces> dieRolls = new ArrayList<>();
+    private int numDie;;
     public final int NUM_FACES = Faces.values().length;
     public Dice() {
-        this.dieRolls.ensureCapacity(1);
-    }
-    public Dice(int numOfDice) {
-        this.dieRolls.ensureCapacity(numOfDice);
+        this.numDie = 8;
+        this.dieRolls.ensureCapacity(2);
     }
 
     public int getNumDie() {
-        return this.getNumDie;
-    }
-    public int getSkullCounter() {
-        return this.skullCounter;
+        return this.numDie;
     }
 
-    public void setSkullCounter(int value) {
-        this.skullCounter = value;
+    public ArrayList<Faces> getDieRolls() {
+        return this.dieRolls;
     }
-    public ArrayList<Faces> getDieStorage() {
-        return this.dieStorage;
 
-    }
     public Faces roll() {
 
         Random bag = new Random();
@@ -39,42 +28,36 @@ public class Dice {
         return Faces.values()[rand];
     }
     public ArrayList<Faces>  roll(int numOfDie) {
-        this.dieRolls.clear();
+        dieRolls.clear();
         for (int i = numOfDie; i > 0; i--)
-            this.dieRolls.add(roll());
-        return this.dieRolls;
+            dieRolls.add(roll());
+        return dieRolls;
     }
-    public void KeepDice() {
+    public void keepDice(Player player) {
         
-        if (this.getNumDie > 2) {
+        if (numDie > 2) {
             Random randDie = new Random();
-            ArrayList<Faces> tempDie = this.dieRolls;
-            int randAmount = randDie.nextInt(this.getNumDie);
+            ArrayList<Faces> tempDie = dieRolls;
+            int randAmount = randDie.nextInt(numDie);
             for (int i = randAmount; i > 0; i--) {
-                int randIndex = randDie.nextInt(this.getNumDie);
-                dieStorage.add(tempDie.get(randIndex));
+                int randIndex = randDie.nextInt(numDie);
+                player.setDieStorage(tempDie.get(randIndex));
                 tempDie.remove(randIndex);
-                this.getNumDie--;
+                numDie--;
             }
         }
 
     }
 
-    public boolean threeSkull () {
-
-        boolean endgame = false;
-        for (Faces face : this.dieRolls) {
-            if (face == Faces.SKULL) {
-                this.skullCounter++;
-            }
-        }
-        if (skullCounter >= 3) {
-            endgame = true;
-            this.skullCounter = 0;
+    public void removeDice(Faces remove) {
+        for(Faces face: dieRolls) {
+            if (face == remove)
+                dieRolls.remove(remove);
         }
 
-        return endgame;
     }
+
+
 
 //    public ArrayList<Faces> rollEight() {
 //        this.dieRolls.clear();
@@ -84,30 +67,7 @@ public class Dice {
 //
 //    }
 
-    public int getScore() {
 
-        int numSaber = 0;
-        int numMonkey = 0;
-        int numParrot = 0;
-
-        for (Faces face: this.dieRolls) {
-            switch(face) {
-                case GOLD, DIAMOND -> this.score += 100;
-                case SABER -> ++numSaber;
-                case MONKEY -> ++numMonkey;
-                case PARROT -> ++numParrot;
-            }
-
-        }
-        if (numSaber == 3)
-            this.score += 100;
-        else if (numMonkey == 3)
-            this.score += 100;
-        else if (numParrot == 3)
-            this.score += 100;
-
-        return this.score;
-    }
 
 
     
