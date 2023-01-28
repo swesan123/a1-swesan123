@@ -11,10 +11,12 @@
     * `mvn compile`
   * To run the project in development mode:
     * `mvn -q exec:java` (here, `-q` tells maven to be _quiet_)
+  * To run the project with # of games for simulation and with logs, TRACE (enables trace logs) or OFF (disables trace logs):
+    * `mvn exec:java -DLEVEL=<TRACE or OFF> -Dexec.mainClass=test.Main -Dexec.args="<# of games>"`
   * To package the project as a turn-key artefact:
     * `mvn package`
-  * To run the packaged delivery:
-    * `java -jar target/piraten-karpen-jar-with-dependencies.jar` 
+  * To run the packaged delivery with # of games for simulation and with logs, TRACE (enables trace logs) or OFF (disables trace logs):
+    * `java -jar -DLEVEL=<TRACE or OFF> target/piraten-karpen-jar-with-dependencies.jar <# of games>"` 
 
 Remark: **We are assuming here you are using a _real_ shell (e.g., anything but PowerShell on Windows)**
 

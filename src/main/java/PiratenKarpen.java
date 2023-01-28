@@ -1,23 +1,55 @@
 import pk.Dice;
 import pk.Faces;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.core.config.Configurator;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
+
 public class PiratenKarpen {
+
+    public static Logger logger = LogManager.getLogger(PiratenKarpen.class);
 
 
     public static void main(String[] args) {
 
+        int numGames;
+        numGames = Integer.parseInt(args[0]);
+//        if (args[1].equalsIgnoreCase("on")) {
+//            System.out.println("Tracing Enabled....");
+//            Configurator.setAllLevels(LogManager.getRootLogger().getName(), Level.TRACE);
+//            Configurator.setRootLevel(Level.TRACE);
+//        }
+
+//        } catch (Exception e) {
+//            System.out.println("Tracing Disabled....");
+//        }
+
+
+//        try {
+
+//        }
+//        catch (Exception e) {
+//            System.out.println("No input of number of games...");
+//
+//        } finally {
+//            System.out.println("Switching to default number of games...");
+//            numGames = 3;
+//        }
+
         System.out.println("Welcome to Piraten Karpen Simulator!");
-        int numGames = Integer.parseInt(args[0]);
+
         System.out.println("Number of games: " + numGames);
         System.out.println();
         int numDice = 8;
-
         Dice myDice1 = new Dice(numDice-1);
         Dice myDice2 = new Dice(numDice-1);
         ArrayList<Faces> player1,player2;
+
 
 
         int skullCounter1 = 0,skullCounter2 = 0;
@@ -98,6 +130,11 @@ public class PiratenKarpen {
         System.out.printf("Player 1 Win Percentage %.2f \n", winPercentageP1);
         System.out.printf("Player 2 Win Percentage %.2f \n", winPercentageP2);
 
+        logger.trace(winPercentageP1);
+        logger.trace(winPercentageP2);
+        logger.error(winPercentageP1);
+        logger.error(winPercentageP2);
+
 //        System.out.println("I'm rolling a dice");
 
 //        System.out.println("  (DEBUG) there are " + myDice.NUMBER_FACES + " faces");
@@ -110,5 +147,5 @@ public class PiratenKarpen {
 //        System.out.println("That's all folks!");
 
     }
-    
+
 }
