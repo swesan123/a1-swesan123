@@ -16,6 +16,9 @@ public class Dice {
     public int getNumDie() {
         return this.numDie;
     }
+    public void setNumDie(int numDie) {
+        this.numDie = numDie;
+    }
 
     public ArrayList<Faces> getDieRolls() {
         return this.dieRolls;
@@ -34,16 +37,16 @@ public class Dice {
         return dieRolls;
     }
     public void keepDice(Player player) {
-        
+
+        int keepLimit = 2;
         if (numDie > 2) {
             Random randDie = new Random();
-            ArrayList<Faces> tempDie = dieRolls;
-            int randAmount = randDie.nextInt(numDie);
-            for (int i = randAmount; i > 0; i--) {
-                int randIndex = randDie.nextInt(numDie);
-                player.setDieStorage(tempDie.get(randIndex));
-                tempDie.remove(randIndex);
-                numDie--;
+            int randIndex;
+            for (int i = keepLimit; i > 0; i--) {
+                randIndex = randDie.nextInt(numDie);
+                player.setDieStorage(dieRolls.get(randIndex));
+                dieRolls.remove(randIndex);
+                numDie = dieRolls.size();
             }
         }
 

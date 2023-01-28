@@ -35,7 +35,7 @@ public class Player {
 
     public boolean threeSkull (Dice dice) {
 
-        boolean endgame = false;
+        boolean isEndRound = false;
         for (Faces face : dice.getDieRolls()) {
             if (face == Faces.SKULL) {
                 skullCounter++;
@@ -43,11 +43,13 @@ public class Player {
             }
         }
         if (skullCounter >= 3) {
-            endgame = true;
+            isEndRound = true;
+            dice.setNumDie(dice.getDieRolls().size());
             skullCounter = 0;
+
         }
 
-        return endgame;
+        return isEndRound;
     }
     public void  setDieStorage(Faces face) {
         this.dieStorage.add(face);
