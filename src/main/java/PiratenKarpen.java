@@ -19,16 +19,6 @@ public class PiratenKarpen {
 
         int numGames;
         numGames = Integer.parseInt(args[0]);
-//        if (args[1].equalsIgnoreCase("on")) {
-//            System.out.println("Tracing Enabled....");
-//            Configurator.setAllLevels(LogManager.getRootLogger().getName(), Level.TRACE);
-//            Configurator.setRootLevel(Level.TRACE);
-//        }
-
-//        } catch (Exception e) {
-//            System.out.println("Tracing Disabled....");
-//        }
-
 
 //        try {
 
@@ -55,56 +45,50 @@ public class PiratenKarpen {
         int skullCounter1 = 0,skullCounter2 = 0;
 
         int gameCounter = 1;
+
         float playerOneWins = 0;
         float playerTwoWins = 0;
 
+        boolean gameFinish;
+        int numRounds;
+        float finalScore1;
+        float finalScore2;
 
         while (numGames >= gameCounter) {
 
-            boolean gameFinish = false;
+            gameFinish = false;
+            numRounds = 1;
+            System.out.println("GAME " + gameCounter);
             while (!gameFinish) {
-                System.out.println("GAME " + gameCounter);
 
-                System.out.println("Player 1 Turn: ");
-                System.out.println("Num die P1: " + myDice1.numDie);
+                System.out.println("ROUND " + numRounds);
                 System.out.println();
-                player1 = myDice1.rollEight();
+                System.out.println("Player 1 Turn: ");
+                System.out.println("Num die P1: " + myDice1.getNumDie());
+                System.out.println();
+                player1 = myDice1.roll(numDice);
                 System.out.println("die roll: " + player1.toString());
                 System.out.println("Score P1: " + myDice1.getScore());
-
-                for (Faces face : player1) {
-                    if (face == Faces.SKULL)
-                        skullCounter1++;
-                }
-
                 System.out.println();
-                System.out.println("skull counter player 1: " + skullCounter1);
                 myDice1.KeepDice();
                 System.out.println("Player 1's dice: " + myDice1.getDieStorage());
                 System.out.println();
-
                 System.out.println("Player 2 Turn: ");
-                System.out.println("num die P2: " + myDice2.numDie);
+                System.out.println("num die P2: " + myDice2.getNumDie());
                 System.out.println();
-                player2 = myDice2.rollEight();
+                player2 = myDice2.roll(numDice);
                 System.out.println("die roll: " + player2.toString());
                 System.out.println("Score P2: " + myDice2.getScore());
 
 
-                for (Faces face : player2) {
-                    if (face == Faces.SKULL)
-                        skullCounter2++;
-                }
-
                 System.out.println();
-                System.out.println("skull counter player 2: " + skullCounter2);
                 myDice2.KeepDice();
                 System.out.println("Player 2's dice: " + myDice2.getDieStorage());
 
                 System.out.println();
-                if (skullCounter1 >= 3 || skullCounter2 >= 3) {
-                    float finalScore1 = myDice1.score;
-                    float finalScore2 = myDice2.score;
+                if (myDice1.threeSkull() || myDice2.threeSkull()) {
+                    finalScore1 = myDice1.score;
+                    finalScore2 = myDice2.score;
                     System.out.println("Final Score P1: " + finalScore1 );
                     System.out.println("Final Score P2: " + finalScore2);
 
@@ -118,7 +102,7 @@ public class PiratenKarpen {
                     gameFinish = true;
 
                 }
-
+                numRounds++;
             }
             System.out.println();
             gameCounter++;
