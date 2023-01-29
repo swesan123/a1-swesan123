@@ -10,6 +10,7 @@ public class Player {
     private int numDie;
     private ArrayList<Faces> dieStorage = new ArrayList<>();
     private int score;
+    private Cards currentCard;
     public Player(String name) {
         this.name = name;
         this.skullCounter = 0;
@@ -55,6 +56,10 @@ public class Player {
         return numDie;
     }
 
+    public Cards getCurrentCard() {
+        return currentCard;
+    }
+
     public void setSkullCounter(int skullCounter) {
         this.skullCounter = skullCounter;
     }
@@ -69,6 +74,17 @@ public class Player {
     public void setDieStorage(Faces face) {
         this.dieStorage.add(face);
 
+    }
+
+    public void setCurrentCard(Cards currentCard) {
+        this.currentCard = currentCard;
+    }
+
+    public void incrementScore(int score) {
+        this.score += score;
+    }
+    public void decrementScore(int score) {
+        this.score -= score;
     }
 
     public void calcScore(Dice dice) {
@@ -160,6 +176,7 @@ public class Player {
         this.numDie = 8;
         this.dieStorage.clear();
         this.skullCounter = 0;
+        this.currentCard = null;
     }
 
     public void isWinner(Player player) {

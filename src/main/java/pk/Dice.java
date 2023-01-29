@@ -7,7 +7,7 @@ public class Dice {
 
     private ArrayList<Faces> dieRolls = new ArrayList<>();
 
-    public final int NUM_FACES = Faces.values().length;
+    private final int NUM_FACES = Faces.values().length;
     public Dice() {
         this.dieRolls.ensureCapacity(2);
     }
