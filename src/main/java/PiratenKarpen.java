@@ -1,3 +1,4 @@
+import org.apache.logging.log4j.Level;
 import pk.Dice;
 import pk.Faces;
 
@@ -5,18 +6,20 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pk.Player;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 
 public class PiratenKarpen {
 
+
     public static Logger logger = LogManager.getLogger(PiratenKarpen.class);
 
 
     public static void main(String[] args) {
-
         int numGames;
-        numGames = Integer.parseInt(args[0]);
+        String strategy;
+
 
         Dice dice = new Dice();
 
@@ -24,6 +27,22 @@ public class PiratenKarpen {
         Player player2 = new Player("Player 2");
 
         System.out.println("Welcome to Piraten Karpen Simulator!");
+        if (args.length > 1) {
+            strategy = args[0];
+            numGames = Integer.parseInt(args[1]);
+            System.out.printf("Command Line Arg specified: [%s, %s]\n", strategy, numGames);
+        }
+        else if (args.length > 0){
+            strategy = args[0];
+            numGames = 42;
+            System.out.printf("Command Line Arg specified: [%s]\n", strategy);
+        } else {
+            System.out.println("No command lines specified swtiching to default.....");
+            numGames = 42;
+        }
+
+
+
         System.out.printf("Number of games: %d\n", numGames);
         System.out.println();
 
@@ -33,8 +52,9 @@ public class PiratenKarpen {
 
         while (numGames >= gameCounter) {
 
-            player1.setScore(0);
-            player2.setScore(0);
+
+            player1.gameReset();
+            player2.gameReset();
             gameFinish = false;
             numRounds = 1;
             System.out.printf("GAME: %d\n", gameCounter);
@@ -48,6 +68,11 @@ public class PiratenKarpen {
                 if(dice.threeSkull(player1)) {
                     player1.isWinner(player2);
                     gameFinish = true;
+                    continue;
+                } else {
+                    player1.calcScore(dice);
+                    System.out.printf("\t\t\t\t\t%s score: %d\n", player1.getName(), player1.getScore());
+                    dice.keepDice(player1);
                 }
 
                 //Player2's turn
@@ -57,70 +82,24 @@ public class PiratenKarpen {
                 if(dice.threeSkull(player2)) {
                     player2.isWinner(player1);
                     gameFinish = true;
+                    continue;
+                } else {
+                    player2.calcScore(dice);
+                    System.out.printf("\t\t\t\t\t%s score: %d\n", player2.getName(), player2.getScore());
+                    dice.keepDice(player2);
                 }
 
-
-//                player1.keepDice();
-//                System.out.println("Player 1's dice: " + player1.getDieStorage());
-//                System.out.println();
-
-                // Player2's  turn
-//                System.out.println("Player 2 Turn: ");
-//                System.out.println("num die P2: " + player2.getNumDie());
-//                System.out.println();
-//                player2 = player2.roll(numDice);
-//                System.out.println("die roll: " + player2.toString());
-//                System.out.println("Score P2: " + player2.getScore());
-//
-//
-//                System.out.println();
-//                player2.keepDice();
-//                System.out.println("Player 2's dice: " + player2.getDieStorage());
-//
-//                System.out.println();
-//                if (player1.threeSkull() || player2.threeSkull()) {
-//                    finalScore1 = player1.score;
-//                    finalScore2 = player2.score;
-//                    System.out.println("Final Score P1: " + finalScore1 );
-//                    System.out.println("Final Score P2: " + finalScore2);
-//
-//                    if (finalScore1  > finalScore2 ) {
-//                        System.out.println("Player 1 Wins!!");
-//                        playerOneWins++;
-//                    }else {
-//                        System.out.println("Player 2 Wins!!");
-//                        playerTwoWins++;
-//                    }
-//                    roundFinish = true;
-//
-//                }
                 numRounds++;
             }
-            System.out.println();
             gameCounter++;
         }
 
-//        float winPercentageP1 = (playerOneWins / numGames) * 100;
-//        float winPercentageP2 = (playerTwoWins / numGames) * 100;
-//
-//        System.out.printf("Player 1 Win Percentage %.2f \n", winPercentageP1);
-//        System.out.printf("Player 2 Win Percentage %.2f \n", winPercentageP2);
-//
-//        logger.trace(winPercentageP1);
-//        logger.trace(winPercentageP2);
-//        logger.error(winPercentageP1);
-//        logger.error(winPercentageP2);
+        logger.printf(Level.INFO,"%s Wins: %f", player1.getName(), player1.getWins());
+        logger.printf(Level.INFO,"%s Wins: %f", player2.getName(), player2.getWins());
+        logger.printf(Level.INFO,"%s Win Percentage: %f", player1.getName(), player1.winPercent());
+        logger.printf(Level.INFO,"%s Win Percentage: %f", player2.getName(), player2.winPercent());
 
-//        System.out.println("I'm rolling a dice");
-
-//        System.out.println("  (DEBUG) there are " + myDice.NUMBER_FACES + " faces");
-//        System.out.println("  (DEBUG) " + Arrays.toString(Faces.values()));
-//        System.out.println(myDice.roll());
-//        System.out.println("I'm rolling 8 die!");
-//        System.out.println("  (DEBUG) there are " + myDice.NUMBER_FACES + " faces");
-//        System.out.println("  (DEBUG) " + Arrays.toString(Faces.values()));
-//        System.out.println(myDice.rollEight());
-//        System.out.println("That's all folks!");
+        System.out.println("That's all folks!");
 
     }
 

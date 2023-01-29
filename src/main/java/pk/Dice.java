@@ -11,30 +11,22 @@ public class Dice {
     public Dice() {
         this.dieRolls.ensureCapacity(2);
     }
-
-
     public ArrayList<Faces> getDieRolls() {
         return this.dieRolls;
     }
 
-//    public Faces roll() {
-//
-//        Random bag = new Random();
-//        int rand = bag.nextInt(NUM_FACES);
-//        return Faces.values()[rand];
-//    }
     public void roll(Player player) {
         String name = player.getName();
         dieRolls.clear();
         int rand = 0;
+
         Random bag = new Random();
         for (int i = player.getNumDie(); i > 0; i--) {
             rand = bag.nextInt(NUM_FACES);
             dieRolls.add(Faces.values()[rand]);
         }
+
         System.out.printf("\t\t\t\t%s rolled: %s\n", name, dieRolls.toString());
-        player.calcScore(this);
-        System.out.printf("\t\t\t\t\t%s score: %d\n", name, player.getScore());
 
 
     }
@@ -48,58 +40,42 @@ public class Dice {
                 randIndex = randDie.nextInt(player.getNumDie());
                 player.setDieStorage(dieRolls.get(randIndex));
                 dieRolls.remove(randIndex);
-                player.setNumDie(dieRolls.size());
+                player.decrementNumDie(1);
             }
+        } else if (player.getDieStorage().size() > 0) {
+            player.incrementNumDie(1);
+            player.getDieStorage().remove(0);
+
         }
+        System.out.printf("\t\t\t\t\t%s die storage: %s\n", player.getName(), player.getDieStorage().toString());
 
     }
     public boolean threeSkull (Player player) {
 
-        boolean isEndRound = false;
+        int removalCounter = 0;
         for (Faces face : dieRolls) {
             if (face == Faces.SKULL) {
                 player.incrementSkullCounter(1);
+                removalCounter++;
             }
         }
+//        int skulls = player.getSkullCounter();
+        if (player.getSkullCounter() >= 3) {
+            player.setSkullCounter(0);
+            return true;
+        }
+        System.out.printf("\t\t\t\tNumber of skulls: %d\n", player.getSkullCounter());
 
-        int skulls = player.getSkullCounter();
-        System.out.printf("\t\t\t\t\tNumber of skulls %d\n", skulls);
-
-        for (int i = skulls; i > 0; i--) {
+        for (int i = removalCounter; i > 0; i--) {
             dieRolls.remove(Faces.SKULL);
             if (player.getNumDie() > 1)
                 player.decrementNumDie(1);
         }
 
-        if (player.getSkullCounter() >= 3) {
-            isEndRound = true;
-            player.setSkullCounter(0);
 
 
-        }
-
-        return isEndRound;
+        return false;
     }
-
-    public void removeDice(ArrayList<Faces> remove) {
-        dieRolls.removeAll(remove);
-        System.out.println(dieRolls.toString());
-
-
-    }
-
-
-
-//    public ArrayList<Faces> rollEight() {
-//        this.dieRolls.clear();
-//        for (int i = this.getNumDie; i > 0; i--)
-//            this.dieRolls.add(roll());
-//        return this.dieRolls;
-//
-//    }
-
-
-
 
     
 }
