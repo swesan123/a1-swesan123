@@ -127,8 +127,8 @@ public class PiratenKarpen {
         }
 
         // logs in percentages and win percents of both players.
-        logger.printf(Level.INFO,"%s Wins: %f", player1.getName(), player1.getWins());
-        logger.printf(Level.INFO,"%s Wins: %f", player2.getName(), player2.getWins());
+        logger.printf(Level.INFO,"%s Wins: %d", player1.getName(), player1.getWins());
+        logger.printf(Level.INFO,"%s Wins: %d", player2.getName(), player2.getWins());
         logger.printf(Level.INFO,"%s Win Percentage: %f", player1.getName(), player1.winPercent());
         logger.printf(Level.INFO,"%s Win Percentage: %f", player2.getName(), player2.winPercent());
         System.out.println("That's all folks!");
