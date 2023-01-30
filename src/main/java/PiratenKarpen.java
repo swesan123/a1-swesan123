@@ -26,6 +26,8 @@ public class PiratenKarpen {
         } else {
             if (player.getCurrentCard() == Cards.SEA_BATTLE)
                 deck.seaBattle(player, dice);
+            else if (player.getCurrentCard() == Cards.MONKEY_BUSINESS)
+                deck.monkeyBusiness(player, dice);
             else
                 player.calcScore(dice);
             System.out.printf("\t\t\t\t\t%s score: %d\n", player.getName(), player.getScore());
@@ -78,7 +80,8 @@ public class PiratenKarpen {
             System.out.printf("GAME: %d\n", gameCounter);
             while (!gameFinish) {
 
-                if (gameTurn(player1, deck, dice) && gameTurn(player2, deck, dice))
+                //&& gameTurn(player2, deck, dice)
+                if (gameTurn(player1, deck, dice) )
                     gameFinish = true;
 
                 numRounds++;

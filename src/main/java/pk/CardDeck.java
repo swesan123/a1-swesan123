@@ -100,6 +100,34 @@ public class CardDeck {
 
     }
 
+    public void monkeyBusiness(Player player, Dice dice) {
+        monkey_business--;
+        cards.remove(Cards.MONKEY_BUSINESS);
+        System.out.printf("\t\t\t\tcards left: %d\n", monkey_business);
+        System.out.printf("\t\t\t\tcards: %s\n", cards.toString());
+        if (monkey_business > 0) {
+
+            int rand;
+            int index;
+            ArrayList<Faces> rolls = dice.getDieRolls();
+            Random bag = new Random();
+            int counter = 0;
+            for (Faces face : dice.getDieRolls()) {
+                if (face == Faces.PARROT) {
+                    counter++;
+                }
+            }
+            for (int i = counter; i > 0; i--) {
+                rolls.remove(Faces.PARROT);
+                rolls.add(Faces.MONKEY);
+            }
+
+            player.calcScore(dice);
+
+        }
+
+    }
+
     public void cardReset() {
         cards.clear();
         sea_battle = 6;
