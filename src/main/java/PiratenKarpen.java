@@ -4,8 +4,6 @@ import pk.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 
 
 public class PiratenKarpen {
@@ -14,32 +12,31 @@ public class PiratenKarpen {
     public static Logger logger = LogManager.getLogger(PiratenKarpen.class);
 
 
-    public static boolean gameTurn (Player player, CardDeck deck, Dice dice) {
-        System.out.printf("\t\t%s Turn:\n", player.getName());
-        System.out.printf("\t\tNumber of P1 die: %d\n", player.getNumDie());
-        deck.cardPull(player);
-        System.out.printf("\t\t\t\tFortune Card: %s\n", player.getCurrentCard());
-        dice.roll(player);
-        if(dice.threeSkull(player)) {
-            player.isWinner(player);
+    public static boolean gameTurn (Player player1, Player player2, CardDeck deck, Dice dice, String strat) {
+        System.out.printf("\t\t%s Turn:\n",player1.getName());
+        logger.printf(Level.INFO,"\t\tNumber of P1 die: %d\n", player1.getNumDie());
+        deck.cardPull(player1);
+        System.out.printf("\t\t\t\tFortune Card: %s\n", player1.getCurrentCard());
+        dice.roll(player1);
+        if(dice.threeSkull(player1)) {
+            player1.isWinner(player2);
             return true;
         } else {
-            if (player.getCurrentCard() == Cards.SEA_BATTLE)
-                deck.seaBattle(player, dice);
-            else if (player.getCurrentCard() == Cards.MONKEY_BUSINESS)
-                deck.monkeyBusiness(player, dice);
+            if (player1.getCurrentCard() == Cards.SEA_BATTLE)
+                deck.seaBattle(player1, dice);
+            else if (player1.getCurrentCard() == Cards.MONKEY_BUSINESS)
+                deck.monkeyBusiness(player1, dice);
             else
-                player.calcScore(dice);
-            System.out.printf("\t\t\t\t\t%s score: %d\n", player.getName(), player.getScore());
-            dice.keepDice(player);
+                player1.calcScore(dice);
+            logger.printf(Level.INFO,"\t\t\t\t\t%s score: %d\n", player1.getName(), player1.getScore());
+            dice.keepDice(player1, strat);
         }
-        return true;
-
+        return false;
     }
 
     public static void main(String[] args) {
         int numGames;
-        String strategy;
+        String strategy = "";
 
 
         Dice dice = new Dice();
@@ -51,23 +48,27 @@ public class PiratenKarpen {
         if (args.length > 1) {
             strategy = args[0];
             numGames = Integer.parseInt(args[1]);
-            System.out.printf("Command Line Arg specified: [%s, %s]\n", strategy, numGames);
+            logger.printf(Level.INFO,"Command Line Arg specified: [%s, %s]\n", strategy, numGames);
         }
         else if (args.length > 0){
             strategy = args[0];
             numGames = 42;
-            System.out.printf("Command Line Arg specified: [%s]\n", strategy);
+            logger.printf(Level.INFO,"Command Line Arg specified: [%s]\n", strategy);
         } else {
-            System.out.println("No command lines specified swtiching to default.....");
+            logger.printf(Level.INFO,"No command lines specified switching to default.....");
+
             numGames = 42;
+
         }
 
-        System.out.printf("Number of games: %d\n", numGames);
+        logger.printf(Level.INFO,"Number of games: %d\n", numGames);
         System.out.println();
 
         int gameCounter = 1;
         boolean gameFinish;
         int numRounds;
+        boolean isPlayer1Done;
+        boolean isPlayer2Done;
 
         while (numGames >= gameCounter) {
 
@@ -79,9 +80,11 @@ public class PiratenKarpen {
             deck.shuffle();
             System.out.printf("GAME: %d\n", gameCounter);
             while (!gameFinish) {
+                System.out.printf("\tROUND: %d\n", numRounds);
+                isPlayer1Done = gameTurn(player1, player2, deck, dice, strategy);
+                isPlayer2Done = gameTurn(player2, player1, deck, dice, "");
 
-                //&& gameTurn(player2, deck, dice)
-                if (gameTurn(player1, deck, dice) )
+                if (isPlayer1Done || isPlayer2Done)
                     gameFinish = true;
 
                 numRounds++;

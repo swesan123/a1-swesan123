@@ -2,8 +2,12 @@ package pk;
 
 import java.util.ArrayList;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 public class Player {
 
+    public static Logger logger = LogManager.getLogger(Player.class);
     private String name = "";
     private int skullCounter;
     private int wins;
@@ -112,11 +116,11 @@ public class Player {
 
             }
         }
-        System.out.printf("\t\t\t\tDiamonds: %d\n", dimaond);
-        System.out.printf("\t\t\t\tGolds: %d\n", gold);
-        System.out.printf("\t\t\t\tMonkeys: %d\n", monkey);
-        System.out.printf("\t\t\t\tSabers: %d\n", saber);
-        System.out.printf("\t\t\t\tParrots: %d\n", parrot);
+        logger.printf(Level.INFO,"\t\t\t\tDiamonds: %d\n", dimaond);
+        logger.printf(Level.INFO,"\t\t\t\tGolds: %d\n", gold);
+        logger.printf(Level.INFO,"\t\t\t\tMonkeys: %d\n", monkey);
+        logger.printf(Level.INFO,"\t\t\t\tSabers: %d\n", saber);
+        logger.printf(Level.INFO,"\t\t\t\tParrots: %d\n", parrot);
 
         dieCombo(dimaond);
         dieCombo(gold);
@@ -132,27 +136,27 @@ public class Player {
         switch (val) {
             case 3 -> {
                 score += 100;
-                System.out.println("\t\t\t\tThree in a row! ");
+                logger.printf(Level.INFO,"\t\t\t\tThree in a row! ");
             }
             case 4 -> {
                 score += 200;
-                System.out.println("\t\t\t\tFour in a row! ");
+                logger.printf(Level.INFO,"\t\t\t\tFour in a row! ");
             }
             case 5 -> {
                 score += 500;
-                System.out.println("\t\t\t\tFive in a row! ");
+                logger.printf(Level.INFO,"\t\t\t\tFive in a row! ");
             }
             case 6 -> {
                 score += 1000;
-                System.out.println("\t\t\t\tSix in a row! ");
+                logger.printf(Level.INFO,"\t\t\t\tSix in a row! ");
             }
             case 7 -> {
                 score += 2000;
-                System.out.println("\t\t\t\tSeven in a row! ");
+                logger.printf(Level.INFO,"\t\t\t\tSeven in a row! ");
             }
             case 8 -> {
                 score += 4000;
-                System.out.println("\t\t\t\tEight in a row! ");
+                logger.printf(Level.INFO,"\t\t\t\tEight in a row! ");
             }
 
         }

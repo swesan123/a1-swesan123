@@ -1,10 +1,14 @@
 package pk;
 
+import org.apache.logging.log4j.Level;
+
 import java.util.ArrayList;
 import java.util.Random;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 public class CardDeck {
-
+    public static Logger logger = LogManager.getLogger(CardDeck.class);
     private int sea_battle;
     private int monkey_business;
     private int nop;
@@ -65,8 +69,8 @@ public class CardDeck {
     public void seaBattle(Player player, Dice dice) {
         sea_battle--;
         cards.remove(Cards.SEA_BATTLE);
-        System.out.printf("\t\t\t\tcards left: %d\n", sea_battle);
-        System.out.printf("\t\t\t\tcards: %s\n", cards.toString());
+        logger.printf(Level.INFO,"\t\t\t\tcards left: %d\n", sea_battle);
+        logger.printf(Level.INFO,"\t\t\t\tcards: %s\n", cards.toString());
         if (sea_battle > 0) {
             int bonus = 200;
             int rand;
@@ -79,14 +83,14 @@ public class CardDeck {
 
             }
             if (numSabers == counter) {
-                System.out.println("\t\t\t\tYou won the sea battle!");
-                System.out.println("\t\t\t\tBonus of 500 is added!");
+                logger.printf(Level.INFO,"\t\t\t\tYou won the sea battle!");
+                logger.printf(Level.INFO,"\t\t\t\tBonus of 500 is added!");
                 player.calcScore(dice);
                 player.incrementScore(500);
 
             } else {
-                System.out.println("\t\t\t\t\tYou lost the sea battle");
-                System.out.println("\t\t\t\t\tYou lost 500!");
+                logger.printf(Level.INFO,"\t\t\t\t\tYou lost the sea battle");
+                logger.printf(Level.INFO,"\t\t\t\t\tYou lost 500!");
                 if ((player.getScore() - 500) < 0)
                     player.setScore(0);
                 else
@@ -103,8 +107,8 @@ public class CardDeck {
     public void monkeyBusiness(Player player, Dice dice) {
         monkey_business--;
         cards.remove(Cards.MONKEY_BUSINESS);
-        System.out.printf("\t\t\t\tcards left: %d\n", monkey_business);
-        System.out.printf("\t\t\t\tcards: %s\n", cards.toString());
+        logger.printf(Level.INFO,"\t\t\t\tcards left: %d\n", monkey_business);
+        logger.printf(Level.INFO,"\t\t\t\tcards: %s\n", cards.toString());
         if (monkey_business > 0) {
 
             int rand;

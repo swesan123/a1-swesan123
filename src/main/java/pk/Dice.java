@@ -1,10 +1,14 @@
 package pk;
+import org.apache.logging.log4j.Level;
+
 import java.util.ArrayList;
 import java.util.Random;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Dice {
 
-
+    public static Logger logger = LogManager.getLogger(Dice.class);
     private ArrayList<Faces> dieRolls = new ArrayList<>();
 
     private final int NUM_FACES = Faces.values().length;
@@ -30,24 +34,34 @@ public class Dice {
 
 
     }
-    public void keepDice(Player player) {
-
-        int keepLimit = 2;
-        if (player.getNumDie() > 2) {
-            Random randDie = new Random();
-            int randIndex;
-            for (int i = keepLimit; i > 0; i--) {
-                randIndex = randDie.nextInt(player.getNumDie());
-                player.setDieStorage(dieRolls.get(randIndex));
-                dieRolls.remove(randIndex);
-                player.decrementNumDie(1);
+    public void keepDice(Player player, String strategy) {
+        int keepLimit = 1;
+        if (!strategy.equalsIgnoreCase("random combo")){
+            if (player.getNumDie() > 2) {
+                for (int i = 0; i < keepLimit; i++) {
+                    player.setDieStorage(dieRolls.get(i));
+                    dieRolls.remove(i);
+                    player.decrementNumDie(1);
+                }
+            } else if (player.getDieStorage().size() > 0) {
+                dieRolls.add(player.getDieStorage().get(0));
+                player.getDieStorage().remove(0);
             }
-        } else if (player.getDieStorage().size() > 0) {
-            player.incrementNumDie(1);
-            player.getDieStorage().remove(0);
+        }
+        else {
+            if(player.getDieStorage().size() == 0) {
+                player.getDieStorage().addAll(dieRolls.subList(0, 6));
+                player.setNumDie(2);
+            }
+            else if (player.getNumDie() < 2) {
+                dieRolls.add(player.getDieStorage().get(0));
+                player.getDieStorage().remove(0);
+                player.incrementNumDie(1);
+
+            }
 
         }
-        System.out.printf("\t\t\t\t\t%s die storage: %s\n", player.getName(), player.getDieStorage().toString());
+        logger.printf(Level.INFO,"\t\t\t\t\t%s die storage: %s\n", player.getName(), player.getDieStorage().toString());
 
     }
     public boolean threeSkull (Player player) {
@@ -64,7 +78,7 @@ public class Dice {
             player.setSkullCounter(0);
             return true;
         }
-        System.out.printf("\t\t\t\tNumber of skulls: %d\n", player.getSkullCounter());
+        logger.printf(Level.INFO,"\t\t\t\tNumber of skulls: %d\n", player.getSkullCounter());
 
         for (int i = removalCounter; i > 0; i--) {
             dieRolls.remove(Faces.SKULL);
