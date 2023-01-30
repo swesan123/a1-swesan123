@@ -1,41 +1,66 @@
+/**
+ * The dice class can roll any number of die, a player can set aside a certain number of die and implements skull
+ * functionality.
+ */
 package pk;
 import org.apache.logging.log4j.Level;
-
 import java.util.ArrayList;
 import java.util.Random;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+
 public class Dice {
 
+    // Initialize logger
     public static Logger logger = LogManager.getLogger(Dice.class);
-    private ArrayList<Faces> dieRolls = new ArrayList<>();
+    private ArrayList<Faces> dieRolls = new ArrayList<>(); // The die that the player rolls.
+    private final int NUM_FACES = Faces.values().length; // The number of faces on the die.
 
-    private final int NUM_FACES = Faces.values().length;
-    public Dice() {
-        this.dieRolls.ensureCapacity(2);
-    }
+    /**
+     * Getter method to get the die rolled during a turn by a player.
+     * @return the ArrayList<Faces> of the die rolls.
+     */
     public ArrayList<Faces> getDieRolls() {
         return this.dieRolls;
     }
 
+    /**
+     * Rolls the die and assigned faces to each die.
+     * @param player The player who is rolling the die.
+     */
     public void roll(Player player) {
-        String name = player.getName();
-        dieRolls.clear();
-        int rand = 0;
 
+        String name = player.getName(); // Gets name of player.
+        dieRolls.clear(); // Clears previous die on board to roll.
+
+        // random number to randomize dice roll
+        int rand = 0;
         Random bag = new Random();
+
+        // rolls num of die the player has
         for (int i = player.getNumDie(); i > 0; i--) {
             rand = bag.nextInt(NUM_FACES);
             dieRolls.add(Faces.values()[rand]);
         }
 
+        // prints whats rolled.
         System.out.printf("\t\t\t\t%s rolled: %s\n", name, dieRolls.toString());
 
 
     }
+
+    /**
+     * Sets aside die for the player based ona default strategy or random  combo.
+     * The strategy only rolls 2 die keeping 6 in storage until all of them run out.
+     * @param player The player who's setting the die aside.
+     * @param strategy The strategy of setting the die aside.
+     */
     public void keepDice(Player player, String strategy) {
-        int keepLimit = 1;
+
+        int keepLimit = 1; // How much die to keep at each turn by default.
+
+        // There is no strategy just use default othewise apply strategy
         if (!strategy.equalsIgnoreCase("random combo")){
             if (player.getNumDie() > 2) {
                 for (int i = 0; i < keepLimit; i++) {
@@ -48,12 +73,13 @@ public class Dice {
                 player.getDieStorage().remove(0);
             }
         }
+        // Combo driven strategy to maxmize triples
         else {
             if(player.getDieStorage().size() == 0) {
                 player.getDieStorage().addAll(dieRolls.subList(0, 6));
                 player.setNumDie(2);
             }
-            else if (player.getNumDie() < 2) {
+            else if (player.getNumDie() < 3) {
                 dieRolls.add(player.getDieStorage().get(0));
                 player.getDieStorage().remove(0);
                 player.incrementNumDie(1);
@@ -64,22 +90,32 @@ public class Dice {
         logger.printf(Level.INFO,"\t\t\t\t\t%s die storage: %s\n", player.getName(), player.getDieStorage().toString());
 
     }
-    public boolean threeSkull (Player player) {
+
+    /**
+     * The threeSkull function determines how many skulls the player has each roll if the player
+     * has three skulls the player is disqualified thus the game ends.
+     * @param player The player whos skulls are being checked and counted.
+     */
+    public boolean isThreeSkull(Player player) {
 
         int removalCounter = 0;
+
+        // Counts how many skulls were rolled.
         for (Faces face : dieRolls) {
             if (face == Faces.SKULL) {
                 player.incrementSkullCounter(1);
                 removalCounter++;
             }
         }
-//        int skulls = player.getSkullCounter();
-        if (player.getSkullCounter() >= 3) {
-            player.setSkullCounter(0);
+
+        // Disqualifies player and ends game if there are three skulls.
+        if (player.getSkulls() >= 3) {
+            player.setSkulls(0);
             return true;
         }
-        logger.printf(Level.INFO,"\t\t\t\tNumber of skulls: %d\n", player.getSkullCounter());
+        logger.printf(Level.INFO,"\t\t\t\tNumber of skulls: %d\n", player.getSkulls());
 
+        // Removes die which rolled skull from die pile.
         for (int i = removalCounter; i > 0; i--) {
             dieRolls.remove(Faces.SKULL);
             if (player.getNumDie() > 1)
@@ -87,8 +123,7 @@ public class Dice {
         }
 
 
-
-        return false;
+        return false; // if there isn't three skulls return false.
     }
 
     
