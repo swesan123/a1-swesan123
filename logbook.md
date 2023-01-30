@@ -13,3 +13,6 @@
 | 01/17/2023 | Implemented fortune card deck with sea battle card functionality.             |
 | 01/18/2023 | Implemented monkey business fortune card mechanic.                            |
 | 01/22/2023 | Finalized version 3 of the project.                                           |
+| 01/26/2023 | Finished island of the skulls                                                 |
+|            |                                                                               |
+|            |                                                                               |
