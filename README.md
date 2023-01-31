@@ -44,4 +44,3 @@ Remark: **We are assuming here you are using a _real_ shell (e.g., anything but 
 |  x   |   seabattle    | Sea battle fortune card                     |   D    | 01/17/2023 | 01/17/2023  |
 |  x   |   strategies   | Leverage mechanic                           |   D    | 01/18/2023 | 01/18/2023  |
 |  x   | monkeybusiness | Monkey business fortune card                |   D    | 01/18/2023 | 01/18/2023  |
-|  x   |   skullisle    | Introduce Island of Skulls                  |   S    | 01/26/2023 | 01/26/2023  |
