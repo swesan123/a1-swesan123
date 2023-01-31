@@ -54,14 +54,14 @@ public class Dice {
      * Sets aside die for the player based ona default strategy or random  combo.
      * The strategy only rolls 2 die keeping 6 in storage until all of them run out.
      * @param player The player who's setting the die aside.
-     * @param strategy The strategy of setting the die aside.
+     * @param strat1 The strategy of setting the die aside.
      */
-    public void keepDice(Player player, String strategy) {
+    public void keepDice(Player player, String strat1) {
 
         int keepLimit = 1; // How much die to keep at each turn by default.
 
         // There is no strategy just use default othewise apply strategy
-        if (!strategy.equalsIgnoreCase("random combo")){
+        if (strat1.equalsIgnoreCase("combo")){
             if (player.getNumDie() > 2) {
                 for (int i = 0; i < keepLimit; i++) {
                     player.setDieStorage(dieRolls.get(i));
@@ -74,7 +74,7 @@ public class Dice {
             }
         }
         // Combo driven strategy to maxmize triples
-        else {
+        else if (strat1.equalsIgnoreCase("random")){
             if(player.getDieStorage().size() == 0) {
                 player.getDieStorage().addAll(dieRolls.subList(0, 6));
                 player.setNumDie(2);

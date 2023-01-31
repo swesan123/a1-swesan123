@@ -31,7 +31,7 @@ public class PiratenKarpen {
      * @param strat Customized strategies for each player.
      * @return a boo lean value indicting if the player has completed their turn.
      */
-    public static boolean gameTurn (Player player1, Player player2, CardDeck deck, Dice dice, String strat) {
+    public static boolean gameTurn (Player player1, Player player2, CardDeck deck, Dice dice, String strat1) {
         System.out.printf("\t\t%s Turn:\n",player1.getName());
         logger.printf(Level.INFO,"\t\tNumber of P1 die: %d\n", player1.getNumDie());
         deck.cardPull(player1);
@@ -48,7 +48,7 @@ public class PiratenKarpen {
             else
                 player1.calcScore(dice);
             logger.printf(Level.INFO,"\t\t\t\t\t%s score: %d\n", player1.getName(), player1.getScore());
-            dice.keepDice(player1, strat);
+            dice.keepDice(player1, strat1);
         }
         return false;
     }
@@ -60,8 +60,8 @@ public class PiratenKarpen {
     public static void main(String[] args) {
 
         int numGames; // total number of games
-        String strategy = ""; // strategy variable
-
+        String stratP1 = ""; // strategy variable for player 1.
+        String stratP2 = ""; // strategy variable for player 2.
 
         Dice dice = new Dice(); // Initializes a new pair of die.
         CardDeck deck = new CardDeck(); // Initializes new card deck.
@@ -73,18 +73,29 @@ public class PiratenKarpen {
          * These conditional statements are in place of a try and catch to mitigate any index errors that would arise from
          * improper command line usage.
          */
-        if (args.length > 1) {
-            strategy = args[0]; // strategy would be the first argument in the command line.
-            numGames = Integer.parseInt(args[1]); // Number of games would be the second argument in the command line.
-            logger.printf(Level.INFO,"Command Line Arg specified: [%s, %s]\n", strategy, numGames); // Log statement prints the command line arguments entered.
+        if (args.length == 3) {
+            stratP1 = args[0]; // strategy for P1 would be the first argument in the command line.
+            stratP2 = args[1]; // strategy for P2 would be the second argument in the command line.
+            numGames = Integer.parseInt(args[2]); // Number of games would be the third argument in the command line.
+            logger.printf(Level.INFO,"Command Line Arg specified: [%s,%s, %s]\n", stratP1, stratP2, numGames); // Log statement prints the command line arguments entered.
+
+        }
+        else if (args.length == 2) {
+            stratP1 = args[0];
+            stratP2 = args[1];
+            numGames = 42; // The default amount of games for simulation.
+            logger.printf(Level.INFO,"Command Line Arg specified: [%s, %s]\n", stratP1, stratP2); // Log statement prints the command line arguments entered.
         }
         else if (args.length > 0){
-            strategy = args[0];
-            numGames = 42; // The default amount of games for simulation.
-            logger.printf(Level.INFO,"Command Line Arg specified: [%s]\n", strategy); // Log statement prints the command line arguments entered.
-        } else {
-            logger.printf(Level.INFO,"No command lines specified switching to default.....");
+            stratP1 = args[0];
+            stratP2 = "random";
             numGames = 42;
+            logger.printf(Level.INFO,"Command Line Arg specified: [%s]\n", stratP1); // Log statement prints the command line arguments entered.
+        } else {
+            stratP1 = "random";
+            stratP2 = "random";
+            numGames = 42;
+            logger.printf(Level.INFO,"No command lines specified switching to default.....");
 
         }
 
@@ -114,8 +125,8 @@ public class PiratenKarpen {
             //Runs turns until a game is finished when a condition is met.
             while (!gameFinish) {
                 System.out.printf("\tROUND: %d\n", numRounds);
-                isPlayer1Done = gameTurn(player1, player2, deck, dice, strategy);
-                isPlayer2Done = gameTurn(player2, player1, deck, dice, "");
+                isPlayer1Done = gameTurn(player1, player2, deck, dice, stratP1);
+                isPlayer2Done = gameTurn(player2, player1, deck, dice, stratP2);
 
                 //if either player has lost or won.
                 if (isPlayer1Done || isPlayer2Done)
